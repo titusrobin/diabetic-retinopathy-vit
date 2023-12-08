@@ -20,8 +20,12 @@ def predict():
     
     # Open the image file
     image = Image.open(image_path)
-    print(f"Dimensions of the image is {image.shape}")
-
-    print(model.predict(image))
-
-    return model.predict(image)
+        # Open the image file
+    image = Image.open(image_path)
+    # print(f"Dimensions of the image is {image.shape}")
+    
+    # print(model.predict(image))
+    image_processor = AutoImageProcessor.from_pretrained("google/vit-base-patch16-224-in21k")
+    inputs = image_processor(image, return_tensors="pt")
+    outputs = model(**inputs)
+    return outputs
