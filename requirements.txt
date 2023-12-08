@@ -14,3 +14,4 @@ uvicorn
 pillow
 transformers
 torch
+streamlit
