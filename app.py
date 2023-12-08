@@ -16,7 +16,7 @@ def predict():
     model = AutoModelForImageClassification.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
 
     # Specify the path to your image
-    image_path = "path/to/your/image.jpeg"
+    image_path = "image.jpeg"
     
     # Open the image file
     image = Image.open(image_path)
