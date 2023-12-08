@@ -7,7 +7,7 @@ app = FastAPI()
 def read_root():
     return {"message": "Hello, World!"}
 
-@app.get('predict')
+@app.get('/predict')
 def predict():
     # Load model directly
     from transformers import AutoImageProcessor, AutoModelForImageClassification
@@ -21,7 +21,7 @@ def predict():
     # Open the image file
     image = Image.open(image_path)
         # Open the image file
-    image = Image.open(image_path)
+    # image = Image.open(image_path)
     # print(f"Dimensions of the image is {image.shape}")
     
     # print(model.predict(image))
