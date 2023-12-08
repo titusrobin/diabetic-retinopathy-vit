@@ -3,7 +3,7 @@ from PIL import Image
 # from transformers import AutoImageProcessor, AutoModelForImageClassification
 # import torch
 
-# Load model and processor
+## Load model and processor
 # processor = AutoImageProcessor.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
 # model = AutoModelForImageClassification.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
 
