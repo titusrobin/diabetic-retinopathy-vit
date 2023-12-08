@@ -1,11 +1,11 @@
 import streamlit as st
 from PIL import Image
-from transformers import AutoImageProcessor, AutoModelForImageClassification
-import torch
+# from transformers import AutoImageProcessor, AutoModelForImageClassification
+# import torch
 
 # Load model and processor
-processor = AutoImageProcessor.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
-model = AutoModelForImageClassification.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
+# processor = AutoImageProcessor.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
+# model = AutoModelForImageClassification.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
 
 # Streamlit app
 st.title("Image Classification App")
@@ -24,17 +24,17 @@ if uploaded_file is not None:
     # Predict button
     if st.button("Predict"):
         # Use the image processor to convert the image to a PyTorch tensor
-        inputs = processor(images=image, return_tensors="pt")
+        # inputs = processor(images=image, return_tensors="pt")
 
-        # Perform inference
-        outputs = model(**inputs)
+        # # Perform inference
+        # outputs = model(**inputs)
 
-        # Get the predicted class probabilities
-        logits = outputs.logits
-        probabilities = torch.nn.functional.softmax(logits, dim=-1)
+        # # Get the predicted class probabilities
+        # logits = outputs.logits
+        # probabilities = torch.nn.functional.softmax(logits, dim=-1)
 
-        # Get the predicted label
-        predicted_label = torch.argmax(probabilities, dim=-1).item()
+        # # Get the predicted label
+        # predicted_label = torch.argmax(probabilities, dim=-1).item()
 
         # Display prediction results
         st.write(f"Predicted Label: {predicted_label}")
