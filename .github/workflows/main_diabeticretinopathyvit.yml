@@ -65,4 +65,4 @@ jobs:
           app-name: 'DiabeticRetinopathyVIT'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_22A28AADFCAD4A87905FD9CE5ED4B69B }}
-          startup-command: ${{ env.STARTUP_COMMAND }}
+          startup-command: ${{ env.STARTUP_COMMAND }} 
