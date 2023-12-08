@@ -1,38 +1,38 @@
-from fastapi import FastAPI
+import streamlit as st
 from PIL import Image
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 import torch
 
-app = FastAPI()
+# Load model and processor
+processor = AutoImageProcessor.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
+model = AutoModelForImageClassification.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
 
-@app.get("/")
-def read_root():
-    return {"message": "Hello, World!"}
+# Streamlit app
+st.title("Image Classification App")
 
-@app.get('/predict')
-def predict():
-    
-    # Load model and processor
-    processor = AutoImageProcessor.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
-    model = AutoModelForImageClassification.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
+# Upload image through Streamlit
+uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
-    # Specify the path to your image
-    image_path = "image.jpeg"
+# Display the uploaded image
+if uploaded_file is not None:
+    image = Image.open(uploaded_file)
+    st.image(image, caption="Uploaded Image", use_column_width=True)
 
-    # Open the image file
-    image = Image.open(image_path)
+    # Predict button
+    if st.button("Predict"):
+        # Use the image processor to convert the image to a PyTorch tensor
+        inputs = processor(images=image, return_tensors="pt")
 
-    # Use the image processor to convert the image to a PyTorch tensor
-    inputs = processor(images=image, return_tensors="pt")
+        # Perform inference
+        outputs = model(**inputs)
 
-    # Perform inference
-    outputs = model(**inputs)
+        # Get the predicted class probabilities
+        logits = outputs.logits
+        probabilities = torch.nn.functional.softmax(logits, dim=-1)
 
-    # Get the predicted class probabilities
-    logits = outputs.logits
-    probabilities = torch.nn.functional.softmax(logits, dim=-1)
+        # Get the predicted label
+        predicted_label = torch.argmax(probabilities, dim=-1).item()
 
-    # Get the predicted label
-    predicted_label = torch.argmax(probabilities, dim=-1).item()
-
-    return predicted_label, probabilities.tolist()[0]
+        # Display prediction results
+        st.write(f"Predicted Label: {predicted_label}")
+        st.write(f"Class Probabilities: {probabilities.tolist()[0]}")
