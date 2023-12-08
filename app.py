@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from PIL import Image
+from transformers import AutoImageProcessor, AutoModelForImageClassification
+import torch
 
 app = FastAPI()
 
@@ -9,23 +11,28 @@ def read_root():
 
 @app.get('/predict')
 def predict():
-    # Load model directly
-    from transformers import AutoImageProcessor, AutoModelForImageClassification
     
+    # Load model and processor
     processor = AutoImageProcessor.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
     model = AutoModelForImageClassification.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
 
     # Specify the path to your image
     image_path = "image.jpeg"
-    
+
     # Open the image file
     image = Image.open(image_path)
-        # Open the image file
-    # image = Image.open(image_path)
-    # print(f"Dimensions of the image is {image.shape}")
-    
-    # print(model.predict(image))
-    image_processor = AutoImageProcessor.from_pretrained("google/vit-base-patch16-224-in21k")
-    inputs = image_processor(image, return_tensors="pt")
+
+    # Use the image processor to convert the image to a PyTorch tensor
+    inputs = processor(images=image, return_tensors="pt")
+
+    # Perform inference
     outputs = model(**inputs)
-    return outputs
+
+    # Get the predicted class probabilities
+    logits = outputs.logits
+    probabilities = torch.nn.functional.softmax(logits, dim=-1)
+
+    # Get the predicted label
+    predicted_label = torch.argmax(probabilities, dim=-1).item()
+
+    return predicted_label, probabilities.tolist()[0]
