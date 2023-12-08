@@ -15,7 +15,10 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png
 
 # Display the uploaded image
 if uploaded_file is not None:
+    # Open the image file
     image = Image.open(uploaded_file)
+
+    # Display the uploaded image
     st.image(image, caption="Uploaded Image", use_column_width=True)
 
     # Predict button
