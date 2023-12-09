@@ -2,10 +2,15 @@ import streamlit as st
 from PIL import Image
 from transformers import AutoImageProcessor, AutoModelForImageClassification
 import torch
+import pandas as pd
 
 # Load model and processor
-processor = AutoImageProcessor.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
-model = AutoModelForImageClassification.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
+processor = AutoImageProcessor.from_pretrained(
+    "rafalosa/diabetic-retinopathy-224-procnorm-vit"
+)
+model = AutoModelForImageClassification.from_pretrained(
+    "rafalosa/diabetic-retinopathy-224-procnorm-vit"
+)
 
 # Streamlit app
 st.title("Image Classification App")
@@ -33,9 +38,15 @@ if uploaded_file is not None:
         logits = outputs.logits
         probabilities = torch.nn.functional.softmax(logits, dim=-1)
 
-        # Get the predicted label
-        predicted_label = torch.argmax(probabilities, dim=-1).item()
+        # Your other code remains the same...
 
-        # Display prediction results
-        st.write(f"Predicted Label: {predicted_label}")
-        st.write(f"Class Probabilities: {probabilities.tolist()[0]}")
+        # Assuming probabilities_list contains the probabilities for each category
+        categories = ["Mild", "Moderate", "Healthy", "Severe", "Proliferative"]
+        probabilities_list = probabilities.tolist()[0]  # Example list of probabilities
+        data = pd.DataFrame(
+            probabilities_list, index=categories, columns=["probability"]
+        )
+
+        # Use Streamlit to create a bar chart
+        st.bar_chart(data)
+
