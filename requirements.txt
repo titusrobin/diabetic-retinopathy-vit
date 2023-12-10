@@ -15,4 +15,3 @@ pillow
 transformers
 torch
 streamlit
-flask
