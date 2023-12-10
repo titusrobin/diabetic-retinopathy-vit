@@ -13,7 +13,7 @@ processor = AutoImageProcessor.from_pretrained("rafalosa/diabetic-retinopathy-22
 model = AutoModelForImageClassification.from_pretrained("rafalosa/diabetic-retinopathy-224-procnorm-vit")
 
 # Streamlit app
-st.title("Image Classification App")
+st.title("RetinaScope")
 
 # Upload image through Streamlit
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
