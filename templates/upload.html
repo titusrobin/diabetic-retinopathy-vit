@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload new File</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">Retinopathy</span> Classifier</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="center-logo">
+        <h2>Welcome! Please upload your retina photo! </h2>
+        <form method=post enctype=multipart/form-data class="upload-form">
+            <input type=file name=file>
+            <input type=submit value=Upload>
+        </form>
+    </div>
+</body>
+</html>
