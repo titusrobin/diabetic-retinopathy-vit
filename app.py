@@ -59,3 +59,5 @@ if uploaded_file is not None:
         except Exception as e:
             logging.error(f"Error during prediction: {e}")
             st.error("An error occurred during prediction.")
+
+# Complete
