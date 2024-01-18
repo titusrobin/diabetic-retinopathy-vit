@@ -44,9 +44,6 @@ The application takes the image of a retina and outputs the probabilities for fi
 # Azure Logs
 ![Azure Logs](./images/Logs.jpeg "Azure Logs")
 
-# Limitations
-- The model accuracy is not high enough that it can be used with complete trust. Rather, it is meant to complement the diagnoses of medical professionals.
-- Due to the cost constraints, we may not be able to host the website for an extended period of time. However, the functioning can be adequately tested on a local codespace by following the steps in the Usage section.
 
 # Use of GitHub Copilot
 Most of this code was written with the help of GitHub Copilot.
